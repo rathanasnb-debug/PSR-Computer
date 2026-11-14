@@ -633,6 +633,77 @@
                 transition-duration: .01ms !important
             }
         }
+
+        @media(min-width:768px) {
+            #app {
+                max-width: none;
+                padding-bottom: 96px
+            }
+
+            header {
+                padding: 18px clamp(24px, 4vw, 72px)
+            }
+
+            .searchbar {
+                padding: 0 clamp(24px, 4vw, 72px) 16px !important
+            }
+
+            .searchbar input {
+                max-width: 760px
+            }
+
+            .hero {
+                min-height: 220px;
+                margin: 20px clamp(24px, 4vw, 72px);
+                padding: 32px clamp(28px, 4vw, 64px)
+            }
+
+            .hero h2 {
+                font-size: clamp(24px, 2.4vw, 36px)
+            }
+
+            h3 {
+                margin: 24px clamp(24px, 4vw, 72px) 12px
+            }
+
+            .chips,
+            .grid,
+            .hs {
+                padding-left: clamp(24px, 4vw, 72px);
+                padding-right: clamp(24px, 4vw, 72px)
+            }
+
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+                gap: 18px
+            }
+
+            .pic {
+                height: 170px
+            }
+
+            .hs .card {
+                width: 220px
+            }
+
+            .in {
+                max-width: 900px;
+                padding: 24px
+            }
+
+            nav div {
+                max-width: 900px
+            }
+
+            nav button {
+                padding: 12px 0;
+                font-size: 13px
+            }
+
+            nav i {
+                font-size: 22px
+            }
+        }
     </style>
     <link rel="manifest" href="manifest.webmanifest">
     <meta name="theme-color" content="#06142F">
@@ -824,7 +895,7 @@
         function list() { return P.filter(function (p) { return p.n.toLowerCase().indexOf(S.q.toLowerCase()) >= 0 && (!S.cat || p.c == S.cat) }) }
         function render() {
             var h = "";
-            if (S.tab == "home") h = '<header><div><div class="logo">PSR <b>Computer Store</b></div><small>📍 Phnom Penh, Cambodia</small></div><button onclick="cart()" style="font-size:24px">🛒' + (count() ? '<sup>' + count() + '</sup>' : "") + '</button></header><div style="padding:0 16px;background:var(--card);padding-bottom:12px"><input id="q" placeholder="Search computers..." value="' + esc(S.q) + '" oninput="S.q=this.value;sg()"></div><div class="hero" style="background-image:linear-gradient(90deg,#06142Fee 38%,#06142F11),url(' + IMG[1] + ')"><i class="fp" style="left:55%"></i><i class="fp" style="left:75%;animation-delay:1s"></i><i class="fp" style="left:90%;animation-delay:2s"></i><div><small style="color:#00D4FF;font-weight:700">UPGRADE YOUR GAMING EXPERIENCE</small><h2>Gaming Laptops<br>Up to <em>30% OFF</em></h2><button onclick="S.q=\'Gaming\';render()">Shop Now →</button></div></div><div class="chips">' + CATS.slice(0, 8).map(function (c, i) { return '<button class="chip" onclick="go(' + i + ')">' + c[1] + " " + c[0] + '</button>' }).join("") + '</div><div id="g">' + homeBody() + '</div>';
+            if (S.tab == "home") h = '<header><div><div class="logo">PSR <b>Computer Store</b></div><small>📍 Phnom Penh, Cambodia</small></div><button onclick="cart()" style="font-size:24px">🛒' + (count() ? '<sup>' + count() + '</sup>' : "") + '</button></header><div class="searchbar" style="padding:0 16px;background:var(--card);padding-bottom:12px"><input id="q" placeholder="Search computers..." value="' + esc(S.q) + '" oninput="S.q=this.value;sg()"></div><div class="hero" style="background-image:linear-gradient(90deg,#06142Fee 38%,#06142F11),url(' + IMG[1] + ')"><i class="fp" style="left:55%"></i><i class="fp" style="left:75%;animation-delay:1s"></i><i class="fp" style="left:90%;animation-delay:2s"></i><div><small style="color:#00D4FF;font-weight:700">UPGRADE YOUR GAMING EXPERIENCE</small><h2>Gaming Laptops<br>Up to <em>30% OFF</em></h2><button onclick="S.q=\'Gaming\';render()">Shop Now →</button></div></div><div class="chips">' + CATS.slice(0, 8).map(function (c, i) { return '<button class="chip" onclick="go(' + i + ')">' + c[1] + " " + c[0] + '</button>' }).join("") + '</div><div id="g">' + homeBody() + '</div>';
             if (S.tab == "cats") h = '<h3 style="padding-top:12px">' + t("cats") + '</h3><div class="chips">' + CATS.map(function (c) { return '<button class="chip' + (S.cat == c[0] ? " on" : "") + '" onclick="S.cat=S.cat==\'' + c[0].replace("&", "&") + '\'?null:\'' + c[0] + '\';render()">' + c[1] + " " + c[0] + '</button>' }).join("") + '</div><div style="height:12px"></div>' + grid(list());
             if (S.tab == "favs") h = '<h3>' + t("favs") + '</h3>' + grid(P.filter(function (p) { return S.favs.indexOf(p.id) >= 0 }));
             if (S.tab == "orders") h = '<h3>' + t("orders") + '</h3><div style="padding:0 16px">' + (S.orders.length ? S.orders.map(function (o) { return '<div class="row" style="display:block"><b>' + esc(o.id) + ' · ' + usd(o.total) + '</b><br><small>' + esc(o.date) + '</small><div>' + o.items.map(esc).join("<br>") + '</div><div class="steps">' + ST.map(function (s, i) { return '<div' + (i <= o.st ? ' class="d"' : "") + '>' + s + '</div>' }).join("") + '</div></div>' }).join("") : '<p class="sub">' + t("none") + '</p>') + '</div>';
